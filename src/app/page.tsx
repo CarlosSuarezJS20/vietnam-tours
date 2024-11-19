@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main>
+    <main className='h-1'>
       <SideNav />
       <Image
         src='https://asiaeyestravel.com/uploads/source//banner/luxury-package-tours.png'
