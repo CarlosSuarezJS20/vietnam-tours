@@ -1,10 +1,9 @@
-import SideNav from "./ui/components/sidenav";
+import SideNav from "./ui/components/navbar";
 import Image from "next/image";
 
-export default function Home() {
+const Home = () => {
   return (
     <main className='h-1'>
-      <SideNav />
       <Image
         src='https://asiaeyestravel.com/uploads/source//banner/luxury-package-tours.png'
         width={1920}
@@ -14,4 +13,6 @@ export default function Home() {
       />
     </main>
   );
-}
+};
+
+export default Home;

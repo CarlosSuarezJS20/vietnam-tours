@@ -6,25 +6,22 @@ import { CiMenuFries } from "react-icons/ci";
 import Link from "next/link";
 import DropMenu from "./dropmenu";
 
-export default function SideNav() {
+const NavBar = () => {
+  // Refactored to separate concerns
   const navElements = [
     {
       linkName: "Tours & Activities",
-      href: "/our-tours",
-      items: ["Day Tours", "Package Tours", "North Tours", "South Tours"],
+      items: [
+        { itemName: "Day Tours", href: "/day-tours" },
+        { itemName: "Package Tours", href: "/package-tours" },
+        { itemName: "North Tours", href: "/north-tours" },
+        { itemName: "South Tours", href: "/south-tours" },
+      ],
+      hasDropdown: true, // Added for better control
     },
-    {
-      linkName: "Private Tours",
-      href: "/private-tours",
-    },
-    {
-      linkName: "Halong Bay",
-      href: "/our-cruises",
-    },
-    {
-      linkName: "About",
-      href: "/about",
-    },
+    { linkName: "Private Tours", href: "/private-tours" },
+    { linkName: "Halong Bay", href: "/our-cruises" },
+    { linkName: "About", href: "/about" },
   ];
 
   return (
@@ -32,24 +29,22 @@ export default function SideNav() {
       <div className='flex items-center'>
         <VietLogo />
         <div className='px-3 hidden md:block'>
-          {navElements.map((link) => {
-            if (link.linkName === "Tours & Activities") {
-              console.log("created menu");
-              return <DropMenu buttonName={link.linkName} items={link.items} />;
-            } else {
-              return (
-                <Link
-                  className='px-2 hover:font-bold hover:underline'
-                  href={link.href}>
-                  {link.linkName}
-                </Link>
-              );
-            }
-          })}
+          {navElements.map(({ linkName, href, items, hasDropdown }) =>
+            hasDropdown ? (
+              <DropMenu key={linkName} buttonName={linkName} items={items} />
+            ) : (
+              <Link
+                key={linkName}
+                className='px-2 hover:font-bold hover:underline'
+                href={href!}>
+                {linkName}
+              </Link>
+            )
+          )}
         </div>
       </div>
       <div className='flex items-center px-2'>
-        <button className='pr-2 text-xl hover:text-lg '>
+        <button className='pr-2 text-xl hover:text-lg'>
           <IoSearchOutline />
         </button>
         <Link href='/my-bookings' className='pr-2 hidden md:block'>
@@ -66,4 +61,6 @@ export default function SideNav() {
       </div>
     </nav>
   );
-}
+};
+
+export default NavBar;

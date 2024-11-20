@@ -1,5 +1,6 @@
 import "./globals.css"; //global css
 import { inter } from "./ui/fonts";
+import NavBar from "./ui/components/navbar";
 
 import type { Metadata } from "next";
 
@@ -15,7 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${inter.className} antialised`}>{children}</body>
+      <body className={`${inter.className} antialised`}>
+        <NavBar />
+        {children}
+      </body>
     </html>
   );
 }

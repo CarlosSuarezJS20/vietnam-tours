@@ -1,6 +1,5 @@
 "use client";
 
-import { ReactNode } from "react";
 import {
   Button,
   Menu,
@@ -11,7 +10,7 @@ import {
 
 interface DropMenuProps {
   buttonName: string;
-  items?: string[];
+  items?: { itemName: string; href?: string }[];
 }
 
 export default function DropMenu({ buttonName, items }: DropMenuProps) {
@@ -23,10 +22,16 @@ export default function DropMenu({ buttonName, items }: DropMenuProps) {
         {buttonName}
       </Button>
       <Popover>
-        <Menu>
-          {items.map((item) => (
-            <MenuItem key={item}>{item}</MenuItem>
-          ))}
+        <Menu className='hidden rounded border-l-2 border-l-emerald-500 text-sm p-2 bg-white outline-none md:grid'>
+          {items &&
+            items.map(({ itemName, href }) => (
+              <MenuItem
+                href={href}
+                className='px-1 py-0.5 outline-none hover:underline hover:font-bold cursor-default'
+                key={itemName}>
+                {itemName}
+              </MenuItem>
+            ))}
         </Menu>
       </Popover>
     </MenuTrigger>
