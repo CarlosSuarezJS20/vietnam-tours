@@ -7,6 +7,7 @@ import {
   CalendarGrid,
   Heading,
 } from "react-aria-components";
+import { getLocalTimeZone, today } from "@internationalized/date";
 
 import tripadvisor from "../../img/pngegg.png";
 import { FaArrowAltCircleRight, FaRegCalendarAlt } from "react-icons/fa";
@@ -20,6 +21,9 @@ import { useState } from "react";
 
 import clsx from "clsx";
 
+import { tv } from "tailwind-variants";
+import { focusRing } from "../utils";
+
 const tourType: { id: number; tourType: string }[] = [
   { id: 1, tourType: "Day Tours" },
   { id: 2, tourType: "Package Tours" },
@@ -28,6 +32,21 @@ const tourType: { id: number; tourType: string }[] = [
   { id: 5, tourType: "Center Of Vietnam" },
 ];
 
+const cellStyles = tv({
+  extend: focusRing,
+  base: "w-9 h-9 text-sm cursor-default rounded-full flex items-center justify-center forced-color-adjust-none",
+  variants: {
+    isSelected: {
+      false:
+        "text-zinc-900 dark:text-zinc-200 hover:bg-gray-100 dark:hover:bg-zinc-700 pressed:bg-gray-200 dark:pressed:bg-zinc-600",
+      true: "bg-blue-600 invalid:bg-red-600 text-white forced-colors:bg-[Highlight] forced-colors:invalid:bg-[Mark] forced-colors:text-[HighlightText]",
+    },
+    isDisabled: {
+      true: "text-gray-300 dark:text-zinc-600 forced-colors:text-[GrayText]",
+    },
+  },
+});
+
 const HomeSearch = () => {
   const [isCalendarTabActive, setIsCalendarTabActive] = useState(false);
   const [isAllToursTabActive, setIsAllToursTabActive] = useState(false);
@@ -35,9 +54,9 @@ const HomeSearch = () => {
   const [selectedBox, setSelectedBox] = useState();
 
   return (
-    <div className='absolute bg-white bg-opacity-80 p-6 top-1/3 left-4 hidden md:block w-1/2 min-w-[550px] lg: w-1/3'>
+    <div className='absolute bg-white bg-opacity-80 p-6 top-1/3 left-40 hidden md:block w-1/2 min-w-[550px] lg: w-1/3'>
       <div className='relative'>
-        <p className='font-extrabold tracking-widest text-emerald-700 text-xl'>
+        <p className='font-extrabold tracking-widest text-emerald-700 text-[2rem]'>
           PLAN YOUR ADVENTURE NOW
         </p>
         <div className=' flex justify-between gap-4 p-3'>
@@ -66,9 +85,10 @@ const HomeSearch = () => {
                 isCalendarTabActive ? "block" : "hidden"
               )}>
               <Calendar
+                minValue={today(getLocalTimeZone())}
                 className=' bg-white text-center'
                 aria-label='Appointment date'>
-                <header className='font-bold text-md flex justify-center gap-5 mb-1'>
+                <header className='font-bold text-md flex justify-between gap-5 mb-1'>
                   <Button slot='previous'>
                     <FaArrowAltCircleLeft />
                   </Button>
@@ -77,8 +97,10 @@ const HomeSearch = () => {
                     <FaArrowAltCircleRight />
                   </Button>
                 </header>
-                <CalendarGrid className='w-[230px] text-sm'>
-                  {(date) => <CalendarCell date={date} />}
+                <CalendarGrid className='w-[230px]'>
+                  {(date) => (
+                    <CalendarCell className={cellStyles} date={date} />
+                  )}
                 </CalendarGrid>
               </Calendar>
             </div>
@@ -108,9 +130,7 @@ const HomeSearch = () => {
                   "absolute bg-white p-4 top-full left-3 w- shadow-md",
                   isAllToursTabActive ? "block" : "hidden"
                 )}>
-                <UniversalCheckBoxGroup
-                  className='text-sml'
-                  label='Type Of Tour'>
+                <UniversalCheckBoxGroup label='Type Of Tour'>
                   {tourType.map(({ tourType, id }) => (
                     <UniversalCheckbox
                       key={`${id}${tourType}`}
