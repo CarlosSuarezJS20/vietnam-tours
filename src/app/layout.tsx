@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' className='min-w-80'>
-      <body className={`${inter.className} antialised`}>
+      <body className={`${inter.className} antialised h-full`}>
         <NavBar />
         {children}
       </body>
