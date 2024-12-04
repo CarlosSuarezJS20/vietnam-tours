@@ -25,7 +25,7 @@ const NavBar = () => {
   ];
 
   return (
-    <nav className='min-w-80 flex w-full fixed  justify-between bg-white px-11 py-3 shadow-lg text-sm z-10'>
+    <nav className='min-w-80 flex w-full fixed  justify-between bg-white px-11 py-3 shadow-lg text-sm z-30'>
       <div className='flex items-center'>
         <VietLogo />
         <div className='px-3 hidden md:block'>

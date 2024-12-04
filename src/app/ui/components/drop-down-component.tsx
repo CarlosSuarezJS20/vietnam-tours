@@ -29,7 +29,7 @@ const DropDown: React.FC<DropDownProps> = ({
   };
 
   return (
-    <div className='relative flex justify-between bg-white px-2 py-1'>
+    <div className='relative flex justify-between bg-white px-2 py-3'>
       <button
         onClick={() => {
           if (openTab === currentTab) {

@@ -14,16 +14,16 @@ import tripadvisor from "../../img/pngegg.png";
 import { FaArrowAltCircleRight, FaRegCalendarAlt } from "react-icons/fa";
 import { MdTour } from "react-icons/md";
 import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { FaPaperPlane } from "react-icons/fa";
 
 import UniversalCheckBoxGroup from "./universal-checkbox/universal-checkgroup";
 
 import { useState } from "react";
 
-import clsx from "clsx";
-
 import { tv } from "tailwind-variants";
 import { focusRing } from "../utils";
 import DropDown from "./drop-down-component";
+import RippleButton from "./rippled-button";
 
 //for now before building API
 const tourType: { id: number; tourType: string }[] = [
@@ -53,14 +53,12 @@ const cellStyles = tv({
 
 const HomeSearch: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>(null);
-
   // calendar
   const [date, setDate] = useState<DateValue | null>(null);
   // checkbox
   const [selectedBox, setSelectedBox] = useState<string[]>([]);
 
   const isActiveHandler: (activeTab: TabType) => void = (activeTab) => {
-    console.log(activeTab);
     if (activeTab) {
       setActiveTab(null);
     }
@@ -70,10 +68,26 @@ const HomeSearch: React.FC = () => {
   return (
     <div className='z-20 absolute bg-white bg-opacity-80 p-6 sm:top-1/4 top-1/3 left-40 hidden md:block w-1/2 min-w-[550px] lg:w-1/3'>
       <div className='relative'>
+        <div className='position: absolute bottom-0 right-0 translate-x-20 translate-y-20 bg-white p-2 flex items-center justify-center  rounded-full border-4 border-tripadvisor'>
+          <Image
+            className='object-contain'
+            src={tripadvisor}
+            alt='tripadvisor'
+            width={80}
+            height={80}
+          />
+        </div>
         <p className='font-extrabold tracking-widest text-emerald-700 text-[2rem]'>
           PLAN YOUR ADVENTURE NOW
         </p>
-        <div className=' flex justify-between gap-4 px-1 py-3'>
+        <div className='flex flex-row-reverse px-2'>
+          <RippleButton
+            isDisabled={date || selectedBox.length > 0 ? false : true}>
+            Search
+            <FaPaperPlane />
+          </RippleButton>
+        </div>
+        <div className=' flex justify-between px-1 py-1'>
           <DropDown
             openTab={activeTab}
             currentTab={"calendar"}
@@ -123,15 +137,6 @@ const HomeSearch: React.FC = () => {
               />
             </DropDown>
           </div>
-        </div>
-        <div className='position: absolute bottom-0 right-0 translate-x-20 translate-y-20 bg-white p-2 flex items-center justify-center  rounded-full border-4 border-tripadvisor'>
-          <Image
-            className='object-contain'
-            src={tripadvisor}
-            alt='tripadvisor'
-            width={80}
-            height={80}
-          />
         </div>
       </div>
     </div>
